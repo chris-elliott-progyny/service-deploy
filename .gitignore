@@ -1,0 +1,22 @@
+# Visual Studio Code
+*.vsix
+.history/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Mac OSX
+.DS_Store
+
+# Intelli-J IDEA projects
+.idea/
+*.iml
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan

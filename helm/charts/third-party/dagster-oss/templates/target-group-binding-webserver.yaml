@@ -1,0 +1,12 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ include "dagster.webserver.fullname" . }}-target-group-binding
+  labels:
+    {{- include "dagster.labels" . | nindent 4 }}
+    component: {{ include "dagster.webserver.componentName" . }}
+spec:
+  serviceRef:
+    name: {{ include "dagster.webserver.fullname" . }}
+    port: http
+  targetGroupARN: {{ .Values.serviceTargetGroupArn }}

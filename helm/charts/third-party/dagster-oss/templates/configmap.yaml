@@ -1,0 +1,10 @@
+{{- if .Values.serviceConfig }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "dagster.fullname" $ -}}-config
+data:
+{{- range $key, $value := .Values.serviceConfig }}
+  {{ $key | upper | quote }}: {{ $value | quote }}
+{{- end }}
+{{- end }}

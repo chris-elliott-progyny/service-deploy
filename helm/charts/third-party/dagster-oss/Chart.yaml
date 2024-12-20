@@ -1,0 +1,14 @@
+apiVersion: v2
+appVersion: dev
+description: The data orchestration platform built for productivity.
+icon: https://dagster.io/images/brand/logos/dagster-primary-mark.png
+keywords:
+- analytics
+- data-orchestrator
+- data-pipelines
+- etl
+- workflow
+kubeVersion: '>= 1.18.0-0'
+name: dagster-cloud-agent
+type: application
+version: 1.8.12

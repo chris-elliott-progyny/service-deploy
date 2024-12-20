@@ -1,0 +1,18 @@
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: {{ include "dagster.webserver.fullname" . }}-target-group-binding
+  labels:
+    {{- include "dagster.labels" . | nindent 4 }}
+    component: {{ include "dagster.webserver.componentName" . }}
+spec:
+  serviceAccountSelector: 
+    matchLabels: 
+      {{- include "dagster.selectorLabels" . | nindent 6 }}
+  # podSelector:
+  #   matchLabels:
+  #     {{- include "dagster.selectorLabels" . | nindent 6 }}
+  #     component: {{ include "dagster.webserver.componentName" . }}
+  securityGroups:
+    groupIds:
+      - {{ .Values.serviceSecurityGroup }}
