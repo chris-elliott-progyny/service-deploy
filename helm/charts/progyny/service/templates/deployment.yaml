@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "http-service.fullname" . }}
+  labels:
+    {{- include "http-service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+       maxUnavailable: {{ .Values.rollingUpdate.maxUnavailable }}
+       maxSurge: {{ .Values.rollingUpdate.maxSurge }}
+  selector:
+    matchLabels:
+      {{- include "http-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ toJson .Values.serviceConfig | sha256sum }}
+        checksum/secrets: {{ toJson .Values.envFromSecrets | sha256sum }}
+      labels:
+        {{- include "http-service.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "http-service.fullname" . }}-service-role
+      restartPolicy: Always
+      containers:
+        - name: {{ include "http-service.fullname" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          envFrom:
+            {{- if .Values.serviceSecrets }}
+            - secretRef:
+                name: {{ include "http-service.fullname" . }}-secrets
+            {{- end }}
+            {{- if .Values.serviceConfig }}
+            - configMapRef:
+                name: {{ include "http-service.fullname" . }}-config
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.path }}
+              port: http
+              httpHeaders:
+                - name: User-Agent
+                  value: {{ .Values.healthcheck.userAgent }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.healthcheck.path }}
+              port: http
+              httpHeaders:
+                - name: User-Agent
+                  value: {{ .Values.healthcheck.userAgent }}
+

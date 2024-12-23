@@ -5,12 +5,11 @@ set -eu
 # Args
 TF_PATH=./service-deploy/terraform/config_lookup
 
-# TODO - populated by the pipeline
-# Terraform vars
-export TF_VAR_service_name="dagster"
-export TF_VAR_env_name="etech-dev"
-export TF_VAR_aws_region="us-east-2"
-export TF_VAR_allowed_account_id="203918842470"
+export TF_VAR_service_name=$SERVICE_NAME
+export TF_VAR_env_name=$ENV_NAME
+export TF_VAR_aws_region=$AWS_REGION
+export TF_VAR_allowed_account_id=$ALLOWED_ACCOUNT_ID
+export TF_VAR_namespace=$NAMESPACE
 
 SERVICE_TFVARS=$(PWD)/service.tfvars
 ENV_TFVARS=$(PWD)/$TF_VAR_env_name-iac.tfvars

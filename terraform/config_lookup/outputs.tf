@@ -1,4 +1,4 @@
 output "helm_values" {
   description = "helm values"
-  value       = local.helm_values
+  value       = local.combined_helm_values
 }

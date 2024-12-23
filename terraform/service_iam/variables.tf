@@ -29,7 +29,7 @@ variable "repository" {
   type        = string
 }
 
-variable "eks_namespace" {
+variable "namespace" {
   description = "EKS namespace for deployment"
   type        = string
 }

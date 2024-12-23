@@ -1,0 +1,13 @@
+{{- if .Values.serviceTargetGroupArn }}
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: {{ include "http-service.fullname" . }}-target-group-binding
+  labels: 
+    {{ include "http-service.labels" . | nindent 4 }}
+spec:
+  serviceRef:
+    name: {{ include "http-service.fullname" . }}
+    port: http
+  targetGroupARN: {{ .Values.serviceTargetGroupArn }}
+{{- end }}

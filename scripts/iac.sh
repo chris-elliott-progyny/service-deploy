@@ -17,16 +17,11 @@ case $2 in
     ;;
 esac
 
-# TODO - populated by the pipeline
-# Terraform Backend ENVs
-TF_STATE_AWS_REGION="us-west-2"
-TF_STATE_BUCKET="terraform-state-203918842470"
-TF_STATE_DYNAMODB_TABLE="terraform-state-203918842470"
-
-export TF_VAR_service_name="dagster"
-export TF_VAR_env_name="etech-dev"
-export TF_VAR_aws_region="us-east-2"
-export TF_VAR_allowed_account_id="203918842470"
+export TF_VAR_service_name=$SERVICE_NAME
+export TF_VAR_env_name=$ENV_NAME
+export TF_VAR_aws_region=$AWS_REGION
+export TF_VAR_allowed_account_id=$ALLOWED_ACCOUNT_ID
+export TF_VAR_namespace=$NAMESPACE
 
 # ROOT_PATH=../../../
 SERVICE_TFVARS=$(PWD)/service.tfvars

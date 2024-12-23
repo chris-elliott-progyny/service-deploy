@@ -1,0 +1,56 @@
+# Default values for http-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+envName: ""
+
+replicaCount: 3
+
+rollingUpdate:
+  maxUnavailable: 25%
+  maxSurge: 2
+
+image:
+  repository: ""
+  pullPolicy: Always
+  tag: ""
+
+fullnameOverride: ""
+
+service:
+  type: NodePort
+  port: 3000
+
+serviceTargetGroupArn: ""
+
+resources:
+  limits:
+    cpu: .5
+    memory: 1024
+  requests:
+    cpu: .5
+    memory: 1024
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+healthcheck:
+  path: "/healthcheck"
+  userAgent: ""
+
+nodeSelector: {}
+
+# config ENVS
+serviceConfig: {}
+
+# exteral-secrets references
+serviceSecrets: {}
+
+secretStoreRefreshInterval: 5m
+# securityContext:
+#   capabilities:
+#     drop:
+#       - NET_RAW

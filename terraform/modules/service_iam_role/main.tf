@@ -77,7 +77,7 @@ module "irsa_role" {
   oidc_providers = {
     main = {
       provider_arn               = var.oidc_provider_arn
-      namespace_service_accounts = ["${var.eks_namespace}:${var.service_name}"]
+      namespace_service_accounts = ["${var.namespace}:${var.service_name}"]
     }
   }
 }

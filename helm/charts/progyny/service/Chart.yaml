@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: service
+description: The data orchestration platform built for productivity.
+keywords:
+  - service
+  - http-service
+kubeVersion: ">= 1.18.0-0"
+name: progyny-service
+type: application
+version: 1.0.0

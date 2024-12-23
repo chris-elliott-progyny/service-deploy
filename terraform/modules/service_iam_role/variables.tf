@@ -29,7 +29,7 @@ variable "oidc_provider_arn" {
   type        = string
 }
 
-variable "eks_namespace" {
+variable "namespace" {
   description = "EKS cluster controller namespace"
   type        = string
 }

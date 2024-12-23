@@ -4,6 +4,11 @@ variable "service_name" {
   type        = string
 }
 
+variable "namespace" {
+  description = "EKS namespace"
+  type        = string
+}
+
 variable "allowed_account_id" {
   description = "Allowed AWS Account id"
   type        = string
@@ -39,11 +44,6 @@ variable "eks_cluster_name" {
   type        = string
 }
 
-variable "eks_namespace" {
-  description = "EKS namespace for deployment"
-  type        = string
-}
-
 variable "service_health_check_path" {
   description = "Service health check path"
   type        = string
@@ -76,4 +76,30 @@ variable "service_secrets" {
   type        = map(string)
   default     = {}
 }
+
+variable "helm_env_overrides" {
+  description = "Helm env overrides"
+  type = object({
+    replicaCount = optional(number, 3)
+    resources = optional(object({
+      limits = object({
+        cpu    = optional(string, ".5")
+        memory = optional(string, "1024")
+      })
+      requests = object({
+        cpu    = optional(string, ".5")
+        memory = optional(string, "1024")
+      })
+    }))
+    autoscaling = optional(object({
+      minReplicas                       = optional(number, 1)
+      maxReplicas                       = optional(number, 3)
+      targetCPUUtilizationPercentage    = optional(number, 80)
+      targetMemoryUtilizationPercentage = optional(number, 80)
+    }))
+  })
+  default = {}
+}
+
+
 

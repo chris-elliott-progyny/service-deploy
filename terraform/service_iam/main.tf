@@ -41,5 +41,5 @@ module "service_iam_role" {
   aws_region        = var.aws_region
   aws_account_id    = local.aws_account_id
   oidc_provider_arn = local.oidc_provider_arn
-  eks_namespace     = var.eks_namespace
+  namespace         = var.namespace
 }

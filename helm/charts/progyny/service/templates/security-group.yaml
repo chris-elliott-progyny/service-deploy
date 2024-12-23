@@ -1,0 +1,13 @@
+apiVersion: vpcresources.k8s.aws/v1beta1
+kind: SecurityGroupPolicy
+metadata:
+  name: {{ include "http-service.fullname" . }}-security-group
+  labels:
+    {{ include "http-service.labels" . | nindent 4 }}
+spec:
+  serviceAccountSelector: 
+    matchLabels: 
+      {{ include "http-service.selectorLabels" . | nindent 6 }}
+  securityGroups:
+    groupIds:
+      - {{ .Values.serviceSecurityGroup }}
